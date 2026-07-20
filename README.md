@@ -1,0 +1,1 @@
+# stockex_proyecto_integrador
