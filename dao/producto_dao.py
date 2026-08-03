@@ -38,6 +38,31 @@ class ProductoDAO:
         cursor.close()
         conexion.close()
 
+    def obtener_por_id(self, id_producto):
+        conexion = Conexion.obtener_conexion()
+        cursor = conexion.cursor()
+        conexion.rollback()  
+
+        cursor.execute("SELECT * FROM productos WHERE id_producto = %s", (id_producto,))
+        registro = cursor.fetchone()
+
+        producto = None
+        if registro:
+            producto = Producto(
+                id_producto=registro[0],
+                nombre=registro[1],
+                precio=registro[2],
+                cantidad=registro[3],
+                id_proveedor=registro[4],
+                descripcion=registro[5],
+                id_categoria=registro[6],
+                id_marca=registro[7]
+        )
+
+        cursor.close()
+        conexion.close()
+        return producto
+
     def actualizar (self, producto):
         conexion = Conexion.obtener_conexion()
         cursor = conexion.cursor()
